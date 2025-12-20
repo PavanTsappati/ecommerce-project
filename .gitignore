@@ -1,0 +1,35 @@
+### Build ###
+build/
+out/
+target/
+
+### Gradle ###
+.gradle/
+!gradle/wrapper/gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
+
+### Logs ###
+*.log
+logs/
+
+### IntelliJ ###
+.idea/
+*.iml
+*.ipr
+*.iws
+
+### Java ###
+*.class
+*.jar
+*.war
+
+### VS Code ###
+.vscode/
+
+### Frontend ###
+node_modules/
+dist/
+
+### OS ###
+.DS_Store
+Thumbs.db

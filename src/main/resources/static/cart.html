@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>E-Commerce | Cart</title>
+
+    <style>
+        body{
+          margin:0;
+          background:#111;
+          font-family:"Poppins",sans-serif;
+          color:white;
+        }
+
+        /* NAVBAR */
+        .navbar{
+          background:#000;
+          padding:18px 35px;
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          border-bottom:1px solid #222;
+        }
+
+        .brand{
+          font-size:26px;
+          font-weight:700;
+          background:linear-gradient(to right,#d4a017,#ffdd55);
+          -webkit-background-clip:text;
+          color:transparent;
+          cursor:pointer;
+        }
+
+        .icons{
+          display:flex;
+          gap:30px;
+          font-size:25px;
+        }
+
+        .icons span{
+          cursor:pointer;
+          color:#d4a017;
+          transition:.2s;
+        }
+        .icons span:hover{
+          color:#ffdd55;
+        }
+
+        /* CART UI */
+        .cart-container{
+          width:70%;
+          margin:40px auto;
+        }
+
+        .cart-card{
+          background:#1b1b1b;
+          padding:22px 26px;
+          border-radius:14px;
+          border:1px solid #2a2a2a;
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-bottom:18px;
+        }
+
+        .cart-left{
+          display:flex;
+          flex-direction:column;
+          gap:5px;
+        }
+
+        .remove-btn{
+          background:#d42424;
+          border:none;
+          padding:8px 15px;
+          border-radius:8px;
+          cursor:pointer;
+          color:white;
+        }
+
+        .place-btn{
+          background:#00b94f;
+          width:100%;
+          padding:16px;
+          border:none;
+          color:white;
+          font-size:20px;
+          border-radius:14px;
+          cursor:pointer;
+          margin-top:30px;
+        }
+
+        /* PROFILE POPUP */
+        .overlay{
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,.5);
+          display:none;
+        }
+
+        .popup{
+          position:fixed;
+          top:50%;
+          left:50%;
+          transform:translate(-50%,-50%);
+          width:320px;
+          background:#1c1c1c;
+          padding:28px;
+          border-radius:14px;
+          display:none;
+          text-align:center;
+        }
+
+        .userBox{
+          background:#222;
+          padding:14px;
+          border-radius:10px;
+          margin-bottom:18px;
+        }
+
+        .logoutBtn{
+          background:#d42424;
+          border:none;
+          width:100%;
+          padding:12px;
+          border-radius:8px;
+          color:white;
+          cursor:pointer;
+        }
+    </style>
+</head>
+
+<body onload="loadCart()">
+
+<div class="navbar">
+    <div class="brand" onclick="goHome()">E-Commerce</div>
+    <div class="icons">
+        <span onclick="goHome()">🏠</span>
+        <span onclick="goOrders()">📦</span>
+        <span onclick="toggleProfile()">👤</span>
+    </div>
+</div>
+
+<div class="cart-container">
+    <div id="cartItems"></div>
+    <button class="place-btn" onclick="placeOrder()">Place Order</button>
+</div>
+
+<!-- PROFILE POPUP -->
+<div class="overlay" id="overlay" onclick="toggleProfile()"></div>
+<div class="popup" id="profilePopup">
+    <h3 style="color:#d4a017">PROFILE</h3>
+    <div class="userBox">👤 <span id="popupUser"></span></div>
+    <button class="logoutBtn" onclick="logout()">Logout</button>
+</div>
+
+<script src="js/cart.js"></script>
+</body>
+</html>

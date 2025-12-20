@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>E-Commerce | Home</title>
+
+    <style>
+        body{
+          margin:0;
+          background:radial-gradient(circle at top,#151515,#0b0b0b 60%);
+          font-family:"Poppins",sans-serif;
+          color:white;
+        }
+
+        .navbar{
+          background:#000;
+          padding:18px 40px;
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          border-bottom:1px solid #222;
+        }
+
+        .brand{
+          font-size:28px;
+          font-weight:700;
+          background:linear-gradient(to right,#d4a017,#ffdd55);
+          -webkit-background-clip:text;
+          color:transparent;
+          cursor:pointer;
+        }
+
+        .icons{
+          display:flex;
+          gap:30px;
+          font-size:24px;
+        }
+
+        .icons span{
+          cursor:pointer;
+          color:#d4a017;
+          transition:.2s;
+        }
+
+        .icons span:hover{
+          transform:scale(1.2);
+          color:#ffdd55;
+        }
+
+        .hero{
+          padding:60px 60px 30px;
+        }
+
+        .hero h1{
+          font-size:42px;
+          margin:0;
+          color:#ffdd55;
+        }
+
+        .hero p{
+          margin-top:10px;
+          color:#aaa;
+          font-size:18px;
+          max-width:520px;
+        }
+
+        .products{
+          padding:20px 60px 80px;
+          display:grid;
+          grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+          gap:40px;
+        }
+
+        .card{
+          background:linear-gradient(180deg,#191919,#121212);
+          padding:22px;
+          border-radius:22px;
+          border:1px solid #2a2a2a;
+          cursor:pointer;
+          transition:.35s;
+          box-shadow:0 18px 45px rgba(0,0,0,.7);
+          position:relative;
+          overflow:hidden;
+        }
+
+        .card:hover{
+          transform:translateY(-10px) scale(1.02);
+          border-color:#d4a017;
+        }
+
+        .card img{
+          width:100%;
+          height:230px;
+          object-fit:contain;
+          border-radius:16px;
+          background:#1f1f1f;
+          border:1px solid #333;
+        }
+
+        .card h3{
+          margin:18px 0 6px;
+          font-size:22px;
+          color:#fff;
+        }
+
+        .price{
+          color:#00ff66;
+          font-size:22px;
+          font-weight:700;
+        }
+
+        .overlay{
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,.6);
+          display:none;
+          z-index:50;
+        }
+
+        .popup{
+          position:fixed;
+          top:50%;
+          left:50%;
+          transform:translate(-50%,-50%);
+          width:320px;
+          background:#151515;
+          padding:30px;
+          border-radius:16px;
+          border:1px solid #333;
+          text-align:center;
+          display:none;
+          z-index:60;
+        }
+
+        .popup h3{
+          color:#ffdd55;
+          margin-bottom:16px;
+        }
+
+        .userBox{
+          background:#222;
+          padding:12px;
+          border-radius:8px;
+          margin-bottom:18px;
+        }
+
+        .logoutBtn{
+          background:#d42424;
+          border:none;
+          width:100%;
+          padding:12px;
+          font-size:17px;
+          border-radius:8px;
+          color:white;
+          cursor:pointer;
+        }
+    </style>
+</head>
+
+<body onload="loadHome()">
+
+<script>
+    // 🚫 BLOCK ACCESS IF NOT LOGGED IN
+    if (!localStorage.getItem("userId")) {
+      window.location.href = "login.html";
+    }
+</script>
+
+<div class="navbar">
+    <div class="brand" onclick="window.location.href='home.html'">E-Commerce</div>
+    <div class="icons">
+        <span onclick="goOrders()">📦</span>
+        <span onclick="goCart()">🛒</span>
+        <span onclick="toggleProfile()">👤</span>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Discover Premium Products</h1>
+    <p>Hand-picked items quality and unbeatable prices.</p>
+</div>
+
+<div class="products" id="products"></div>
+
+<div id="overlay" class="overlay" onclick="toggleProfile()"></div>
+
+<div id="profilePopup" class="popup">
+    <h3>PROFILE</h3>
+    <div id="popupUser" class="userBox"></div>
+    <button onclick="logoutUser()" class="logoutBtn">Logout</button>
+</div>
+
+<script>
+    async function loadHome() {
+      if(!localStorage.getItem("userId")) {
+        window.location.href = "login.html";
+      }
+
+      const res = await fetch("http://localhost:8080/api/products");
+      const products = await res.json();
+
+      document.getElementById("products").innerHTML = products
+        .map(p => `
+          <div class="card" onclick="viewProduct(${p.id})">
+            <img src="${p.imageUrl}" alt="">
+            <h3>${p.name}</h3>
+            <div class="price">₹ ${p.price}</div>
+          </div>
+        `).join("");
+    }
+
+    function viewProduct(id) {
+      window.location.href = `product.html?id=${id}`;
+    }
+
+    function goCart() {
+      window.location.href = "cart.html";
+    }
+
+    function goOrders() {
+      window.location.href = "orders.html";
+    }
+
+    function logoutUser() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+
+    function toggleProfile() {
+      const popup = document.getElementById("profilePopup");
+      const overlay = document.getElementById("overlay");
+
+      const u = localStorage.getItem("username") || "Guest";
+      document.getElementById("popupUser").innerText = "👤 " + u;
+
+      const visible = popup.style.display === "block";
+      popup.style.display = visible ? "none" : "block";
+      overlay.style.display = visible ? "none" : "block";
+    }
+</script>
+
+</body>
+</html>

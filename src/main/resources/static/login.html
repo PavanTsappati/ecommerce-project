@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Commerce | Login</title>
+
+    <style>
+        body {
+          margin:0;
+          height:100vh;
+          font-family:'Poppins',sans-serif;
+          background:#0d0d0d;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          color:white;
+        }
+
+        .login-box {
+          background:#111;
+          width:360px;
+          padding:35px 32px;
+          border-radius:14px;
+          text-align:center;
+          border:1px solid #222;
+          box-shadow:0 0 18px rgba(212,175,55,0.25);
+          animation:fadeIn .6s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity:0; transform:translateY(20px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+
+        .login-box h2 {
+          margin-bottom:22px;
+          color:#d4af37;
+          font-weight:600;
+          font-size:26px;
+        }
+
+        .input-field {
+          width:100%;
+          margin-bottom:18px;
+        }
+
+        .input-field input {
+          width:100%;
+          padding:12px;
+          border-radius:8px;
+          border:1px solid #444;
+          font-size:15px;
+          background:#1b1b1b;
+          color:white;
+          outline:none;
+          transition:.3s;
+        }
+
+        .input-field input:focus {
+          border:1px solid #d4af37;
+          box-shadow:0 0 6px rgba(212,175,55,0.6);
+        }
+
+        .btn {
+          width:100%;
+          padding:12px;
+          border-radius:8px;
+          background:#d4af37;
+          color:black;
+          font-weight:600;
+          border:none;
+          cursor:pointer;
+          font-size:17px;
+          transition:.3s;
+        }
+
+        .btn:hover {
+          background:#f4d87a;
+        }
+
+        .register-text {
+          margin-top:12px;
+          font-size:14px;
+          color:#aaa;
+        }
+
+        .register-text span {
+          color:#d4af37;
+          cursor:pointer;
+          font-weight:600;
+        }
+    </style>
+</head>
+
+<body>
+<div class="login-box">
+    <h2>Welcome Back 👋</h2>
+
+    <div class="input-field">
+        <input type="text" id="username" placeholder="Enter username" />
+    </div>
+
+    <div class="input-field">
+        <input type="password" id="password" placeholder="Enter password" />
+    </div>
+
+    <button class="btn" onclick="loginUser()">Login</button>
+
+    <p class="register-text">
+        Don't have an account? <span onclick="window.location.href='register.html'">Register</span>
+    </p>
+</div>
+
+<script>
+    async function loginUser() {
+      let username = document.getElementById("username").value.trim().toLowerCase();
+      let password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        alert("Enter username & password");
+        return;
+      }
+
+      const res = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        alert("Login failed: " + err);
+        return;
+      }
+
+      const data = await res.json();
+      alert(data.message);
+
+      const role = (data.role || "").trim().toUpperCase();
+
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", role);
+
+      if (role === "ADMIN") {
+        window.location.href = "admin.html";
+        } else {
+             window.location.href = "home.html";
+        }
+    }
+</script>
+
+</body>
+</html>
