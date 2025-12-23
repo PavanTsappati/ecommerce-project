@@ -4,7 +4,6 @@ async function loadCart() {
     window.location.href = "login.html";
   }
 
-
   const userId = localStorage.getItem("userId");
 
   if (!userId) {
@@ -23,7 +22,7 @@ async function loadCart() {
   document.getElementById("popupUser").innerText = user;
 
   // fetch cart
-  const res = await fetch(`http://localhost:8080/api/cart?userId=${userId}`);
+  const res = await fetch(`/api/cart?userId=${userId}`);
   const cart = await res.json();
 
   const div = document.getElementById("cartItems");
@@ -47,14 +46,12 @@ async function loadCart() {
   `).join("");
 }
 
-
 async function removeItem(id) {
-  await fetch(`http://localhost:8080/api/cart/${id}`, {
+  await fetch(`/api/cart/${id}`, {
     method: "DELETE"
   });
   loadCart();
 }
-
 
 async function placeOrder() {
   const userId = localStorage.getItem("userId");
@@ -63,7 +60,7 @@ async function placeOrder() {
     return;
   }
 
-  const res = await fetch(`http://localhost:8080/api/orders/place?userId=${userId}`, {
+  const res = await fetch(`/api/orders/place?userId=${userId}`, {
     method: "POST"
   });
 
@@ -74,7 +71,6 @@ async function placeOrder() {
 
   window.location.href = "orders.html";
 }
-
 
 /* NAVIGATION */
 function goHome() { location.href = "home.html"; }
