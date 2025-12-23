@@ -7,7 +7,7 @@ async function loadProduct(){
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
 
-  const res = await fetch(`http://localhost:8080/api/products/${id}`);
+  const res = await fetch(`/api/products/${id}`);
   const p = await res.json();
 
   document.getElementById("product").innerHTML = `
@@ -35,7 +35,7 @@ async function addToCart(productId){
   }
 
   await fetch(
-    `http://localhost:8080/api/cart/add?userId=${userId}&productId=${productId}`,
+    `/api/cart/add?userId=${userId}&productId=${productId}`,
     { method:"POST" }
   );
 
