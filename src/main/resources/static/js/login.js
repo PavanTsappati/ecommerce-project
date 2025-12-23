@@ -1,38 +1,43 @@
 async function loginUser() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value.trim().toLowerCase();
+  const password = document.getElementById("password").value.trim();
 
-  console.log("Login request:", { username, password });
-
-  const res = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    alert("Login failed: " + err);
+  if (!username || !password) {
+    alert("Enter username & password");
     return;
   }
 
-  const data = await res.json();
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
 
-  alert(data.message);
+    if (!res.ok) {
+      const err = await res.text();
+      alert("Login failed: " + err);
+      return;
+    }
 
-  console.log("FULL RESPONSE:", data);
-  console.log("User ID:", data.userId);
-  console.log("Role Received:", data.role);
+    const data = await res.json();
 
-  localStorage.setItem("userId", data.userId);
-  localStorage.setItem("username", data.username);
-  localStorage.setItem("role", data.role);
+    alert(data.message);
 
-  if (data.role && data.role.toUpperCase() === "ADMIN") {
-    console.log("Redirecting to ADMIN dashboard...");
-    window.location.href = "admin.html";
-  } else {
-    console.log("Redirecting to USER home...");
-    window.location.href = "home.html";
+    const role = (data.role || "").toUpperCase();
+
+    localStorage.setItem("userId", data.userId);
+    localStorage.setItem("username", data.username || username);
+    localStorage.setItem("role", role);
+
+    if (role === "ADMIN") {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "home.html";
+    }
+
+  } catch (e) {
+    alert("Server not reachable");
+    console.error(e);
   }
 }
