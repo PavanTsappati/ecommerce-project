@@ -20,7 +20,7 @@ function initAdmin() {
 }
 
 async function loadProducts() {
-    const res = await fetch("http://localhost:8080/api/products");
+    const res = await fetch("/api/products");
     const products = await res.json();
 
     document.getElementById("productList").innerHTML = products.map(p => `
@@ -57,7 +57,7 @@ async function saveProduct() {
         return;
     }
 
-    let url = "http://localhost:8080/api/products";
+    let url = "/api/products";
     let method = "POST";
 
     if (editId) {
@@ -91,7 +91,7 @@ async function saveProduct() {
 async function deleteProduct(id) {
     if (!confirm("Are you sure?")) return;
 
-    const res = await fetch(`http://localhost:8080/api/products/${id}`, {
+    const res = await fetch(`/api/products/${id}`, {
         method: "DELETE"
     });
 
