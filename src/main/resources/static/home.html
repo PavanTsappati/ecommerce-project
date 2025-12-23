@@ -196,7 +196,7 @@
         window.location.href = "login.html";
       }
 
-      const res = await fetch("http://localhost:8080/api/products");
+      const res = await fetch("/api/products");
       const products = await res.json();
 
       document.getElementById("products").innerHTML = products
@@ -238,6 +238,3 @@
       overlay.style.display = visible ? "none" : "block";
     }
 </script>
-
-</body>
-</html>
