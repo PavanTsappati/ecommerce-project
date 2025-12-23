@@ -14,23 +14,29 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
 
-                        // Login/Register free
-                        .requestMatchers("/api/auth/**").permitAll()
+                // Auth APIs
+                .requestMatchers("/api/auth/**").permitAll()
 
-                        // Product listing free
-                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                // Static frontend files
+                .requestMatchers(
+                    "/",
+                    "/**/*.html",
+                    "/**/*.css",
+                    "/**/*.js"
+                ).permitAll()
 
-                        // Product CRUD free (No admin restriction)
-                        .requestMatchers(HttpMethod.POST, "/api/products/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").permitAll()
+                // Products (open for now)
+                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/api/products/**").permitAll()
 
-                        // Cart/orders need login, but we disable that also for now
-                        .anyRequest().permitAll()
-                );
+                // Everything else (open for now)
+                .anyRequest().permitAll()
+            );
 
         return http.build();
     }
