@@ -1,10 +1,8 @@
-
 async function loadOrders(){
 
   if(!localStorage.getItem("userId")) {
     window.location.href = "login.html";
   }
-
 
   const userId = localStorage.getItem("userId");
 
@@ -17,7 +15,7 @@ async function loadOrders(){
     document.getElementById("popupUser").innerText = email;
   }
 
-  const res = await fetch(`http://localhost:8080/api/orders?userId=${userId}`);
+  const res = await fetch(`/api/orders?userId=${userId}`);
   const orders = await res.json();
 
   const div = document.getElementById("orders");
@@ -75,4 +73,3 @@ function logout(){
   localStorage.clear();
   location.href="login.html";
 }
-
