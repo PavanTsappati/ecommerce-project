@@ -13,7 +13,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String password;
 
     private String role; // USER or ADMIN
