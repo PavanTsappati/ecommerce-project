@@ -29,13 +29,13 @@ This project focuses on real-world e-commerce business logic, clean UI flow, and
 
 ## 🎥 Project Demo (Video)
 
-Complete working demo video of the application:
+▶️ **Complete Working Demo Video**
 
-LinkedIn Project Demo Video:  
-[https://www.linkedin.com/posts/pavan-tsappati_java-springboot-apidevelopment-activity-7411682371692855296-TFLB?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE53PE0ByhYbsF6a2UxGoHMYOaIx_J5TlPw]
+🔗 **Watch on LinkedIn:**  
+👉 [Click here to watch the E-Commerce project demo video](https://www.linkedin.com/posts/pavan-tsappati_java-springboot-apidevelopment-activity-7411682371692855296-TFLB/)
 
-The demo video covers:
-- Login & Registration flow  
+### Demo Covers:
+- User Login & Registration  
 - Product browsing  
 - Cart operations  
 - Checkout & order placement  
