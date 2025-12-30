@@ -20,7 +20,7 @@ This project focuses on real-world e-commerce business logic, clean UI flow, and
 ## 🛠️ Tech Stack
 
 - Frontend: HTML, CSS, JavaScript  
-- Backend: Java, Spring Boot  
+- Backend: Java, Spring Boot 
 - Database: Relational Database (Users, Products, Orders)  
 - Architecture: Controller → Service → Repository  
 - Server: Embedded Tomcat  
